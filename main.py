@@ -15,7 +15,7 @@ def read_users():
         return users
     except:
         # If no file exists, create default admin and student accounts
-        return {'YKang': '2010', 'student': '1234'}
+        return {'admin': 'admin123', 'student': '1234'}
 
 # Save all users to the file
 def save_users(users):
