@@ -5,7 +5,7 @@
 # Store users and passwords in a simple text file
 def read_users():
     try:
-        file = open('users.txt', 'r')
+        file = open('users.txt', 'r+')
         users = {}
         for line in file:
             # Split each line into username and password
