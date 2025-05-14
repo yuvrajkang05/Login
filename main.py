@@ -120,7 +120,7 @@ while True:
         print(f"\nWelcome back {username}!")
         
         # Check if user is admin
-        if username == 'admin':
+        if username == 'admin' or username == 'YKang':
             show_admin_menu(users, username)
         else:
             show_user_menu(users, username)
