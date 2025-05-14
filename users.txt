@@ -1,2 +1,2 @@
 YKang:2010
-student:1234
+student:2010
