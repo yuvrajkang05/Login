@@ -1,47 +1,83 @@
-def load_users():
+
+# Simple Login System
+# This program allows users to login and manage accounts
+
+# Function to get users from file
+def get_users():
     try:
-        with open('users.txt', 'r') as file:
-            return dict(line.strip().split(':') for line in file)
+        # Try to open and read the users file
+        file = open('users.txt', 'r')
+        users = {}
+        # Read each line and split username:password
+        for line in file:
+            username, password = line.strip().split(':')
+            users[username] = password
+        file.close()
+        return users
     except:
-        return {'admin': 'admin'}
+        # If file doesn't exist, return default admin account
+        return {'admin': 'pass123'}
 
+# Function to save users to file
 def save_users(users):
-    with open('users.txt', 'w') as file:
-        for username, password in users.items():
-            file.write(f'{username}:{password}\n')
+    # Open file and write all username:password pairs
+    file = open('users.txt', 'w')
+    for username in users:
+        file.write(f'{username}:{users[username]}\n')
+    file.close()
 
+# Main program
 def main():
-    users = load_users()
-
+    # Load all users
+    users = get_users()
+    
+    # Main program loop
     while True:
-        username = input('Username: ')
-        password = input('Password: ')
-
+        # Get login details
+        print("\n=== LOGIN SYSTEM ===")
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        
+        # Check if login is correct
         if username in users and users[username] == password:
-            print('Access granted')
-
+            print("\nWelcome", username)
+            
+            # Menu loop
             while True:
-                choice = input('\n1. Add user\n2. Change password\n3. Logout\nChoice: ')
-
+                print("\nMENU")
+                print("1. Add new user")
+                print("2. Change my password")
+                print("3. Logout")
+                
+                choice = input("\nEnter choice (1-3): ")
+                
+                # Add new user
                 if choice == '1':
-                    new_user = input('New username: ')
-                    new_pass = input('New password: ')
+                    new_user = input("New username: ")
+                    new_pass = input("New password: ")
                     users[new_user] = new_pass
                     save_users(users)
-                    print('User added')
-
+                    print("User added!")
+                
+                # Change password
                 elif choice == '2':
-                    new_pass = input('New password: ')
+                    new_pass = input("New password: ")
                     users[username] = new_pass
                     save_users(users)
-                    print('Password changed')
-
+                    print("Password changed!")
+                
+                # Logout
                 elif choice == '3':
+                    print("Goodbye!")
                     break
+        
         else:
-            print('Access denied')
-            if input('Try again? (y/n): ').lower() != 'y':
-                break
+            print("Wrong username or password!")
+        
+        # Ask to try again
+        again = input("\nTry again? (yes/no): ")
+        if again.lower() != 'yes':
+            break
 
-if __name__ == '__main__':
-    main()
+# Start the program
+main()
