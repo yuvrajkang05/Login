@@ -1,83 +1,83 @@
 
-# Simple Login System
-# This program allows users to login and manage accounts
+# Simple Login System for Year 10
+# This program lets users log in and manage their passwords
 
-# Function to get users from file
-def get_users():
+# Store users and passwords in a simple text file
+def read_users():
     try:
-        # Try to open and read the users file
         file = open('users.txt', 'r')
         users = {}
-        # Read each line and split username:password
         for line in file:
+            # Split each line into username and password
             username, password = line.strip().split(':')
             users[username] = password
         file.close()
         return users
     except:
-        # If file doesn't exist, return default admin account
-        return {'admin': 'pass123'}
+        # If no file exists, create a default user
+        return {'student': '1234'}
 
-# Function to save users to file
+# Save all users to the file
 def save_users(users):
-    # Open file and write all username:password pairs
     file = open('users.txt', 'w')
     for username in users:
         file.write(f'{username}:{users[username]}\n')
     file.close()
 
-# Main program
-def main():
-    # Load all users
-    users = get_users()
-    
-    # Main program loop
-    while True:
-        # Get login details
-        print("\n=== LOGIN SYSTEM ===")
-        username = input("Enter username: ")
-        password = input("Enter password: ")
-        
-        # Check if login is correct
-        if username in users and users[username] == password:
-            print("\nWelcome", username)
-            
-            # Menu loop
-            while True:
-                print("\nMENU")
-                print("1. Add new user")
-                print("2. Change my password")
-                print("3. Logout")
-                
-                choice = input("\nEnter choice (1-3): ")
-                
-                # Add new user
-                if choice == '1':
-                    new_user = input("New username: ")
-                    new_pass = input("New password: ")
-                    users[new_user] = new_pass
-                    save_users(users)
-                    print("User added!")
-                
-                # Change password
-                elif choice == '2':
-                    new_pass = input("New password: ")
-                    users[username] = new_pass
-                    save_users(users)
-                    print("Password changed!")
-                
-                # Logout
-                elif choice == '3':
-                    print("Goodbye!")
-                    break
-        
-        else:
-            print("Wrong username or password!")
-        
-        # Ask to try again
-        again = input("\nTry again? (yes/no): ")
-        if again.lower() != 'yes':
-            break
+# Main program starts here
+print("Welcome to the School Login System!")
+users = read_users()
 
-# Start the program
-main()
+while True:
+    # Show login screen
+    print("\n====================")
+    print("LOGIN SCREEN")
+    print("====================")
+    
+    # Get username and password
+    username = input("Username: ")
+    password = input("Password: ")
+    
+    # Check if login is correct
+    if username in users and users[username] == password:
+        print(f"\nWelcome back {username}!")
+        
+        # Show menu
+        while True:
+            print("\nWhat would you like to do?")
+            print("1. Add a new user")
+            print("2. Change your password")
+            print("3. Log out")
+            
+            choice = input("\nType 1, 2 or 3: ")
+            
+            if choice == '1':
+                # Add new user
+                new_username = input("Enter new username: ")
+                new_password = input("Enter new password: ")
+                users[new_username] = new_password
+                save_users(users)
+                print("New user has been added!")
+                
+            elif choice == '2':
+                # Change password
+                new_password = input("Enter your new password: ")
+                users[username] = new_password
+                save_users(users)
+                print("Your password has been changed!")
+                
+            elif choice == '3':
+                print("Thank you for using the system!")
+                break
+            
+            else:
+                print("Please choose 1, 2 or 3!")
+    
+    else:
+        print("Sorry, wrong username or password!")
+    
+    # Ask to try again
+    again = input("\nWould you like to try again? (yes/no): ")
+    if again.lower() != 'yes':
+        print("Goodbye!")
+        break
