@@ -1,1 +1,2 @@
-{"admin": "admin"}
+YKang:2010
+student:1234
